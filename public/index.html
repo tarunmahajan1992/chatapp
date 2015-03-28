@@ -19,7 +19,7 @@
                 <tr ng-repeat="developer in developers">
                 <td>{{developer.firstname}}</td>
                     <td>{{developer.lastname}}</td>
-                    <td><button class="btn btn-danger pull-right">
+                    <td><button ng-click="remove($index)" class="btn btn-danger pull-right">
                     <span class="glyphicon glyphicon-remove"></span>
                     </button></td>
                 </tr> 
