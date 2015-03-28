@@ -15,6 +15,10 @@ res.json(developer);
 app.get('/rest/developer/:index',function(req,res){
 res.json(developer[req.params.index]);
 });
+app.delete('/rest/developer/:index',function(req,res){
+developer.splice(req.params.index,1);
+    res.json(developer);
+});
 app.use(express.static(__dirname + '/public'));
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'

@@ -11,7 +11,17 @@
 </head>
     <body ng-app="chatapp">
         <div class="container" ng-controller="chatcontroller">
-            {{hello}}
+         <table class="table table-striped">
+            <thead>
+             <td>First name</td><td>Last name</td>
+            </thead>
+            <tbody>
+                <tr ng-repeat="developer in developers">
+                <td>{{developer.firstname}}</td>
+                    <td>{{developer.lastname}}</td>
+                </tr> 
+            </tbody>
+            </table>
         </div>
     
    </body>
