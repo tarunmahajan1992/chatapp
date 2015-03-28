@@ -10,4 +10,13 @@ app.controller("chatcontroller",function($scope,$http){
             $scope.developers=response;
         });
     };
+    $scope.add=function(dev){
+        alert('here');
+        $http.post('/rest/developer',dev) 
+         .success(function(response){
+            $scope.developers=response;
+        }) 
+        }
+        
+    
 });

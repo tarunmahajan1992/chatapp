@@ -13,7 +13,12 @@
         <div class="container" ng-controller="chatcontroller">
          <table class="table table-striped">
             <thead>
-             <td>First name</td><td>Last name</td>
+                <tr><th><input ng-model="dev.firstname" class="form-control"/></th>
+                <th><input ng-model="dev.lastname" class="form-control"/></th>
+                <th><button ng-click="add(dev)" class="btn btn-success pull-right">
+                    <span class="glyphicon glyphicon-success"></span></th>
+                </tr>
+             <tr><th>First name</th><th>Last name</th></tr>
             </thead>
             <tbody>
                 <tr ng-repeat="developer in developers">
