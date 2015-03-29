@@ -27,14 +27,17 @@ app.get('/',function(req,res){
     res.send('hello world');
 });
 app.get('/rest/developer',function(req,res){
-res.json(developer);
+find(res);
 });
 app.get('/rest/developer/:index',function(req,res){
 res.json(developer[req.params.index]);
 });
-app.delete('/rest/developer/:index',function(req,res){
-developer.splice(req.params.index,1);
-    res.json(developer);
+app.delete('/rest/developer/:id',function(req,res){
+developerModel.remove({_id:req.params.id},function(err){
+if(!err) find(res);
+    else res.json(err);
+})
+    console.log(req.params.id);
 });
 
 app.post('/rest/developer',function(req,res){
@@ -44,12 +47,12 @@ app.post('/rest/developer',function(req,res){
     res.json(developer);*/
     console.log(JSON.stringify(newDeveloper))
     var develp=new developerModel(newDeveloper);
-    develp.save();
-    
-    developerModel.find(function(err,dvp){
-        if(err) return console.log("error");
-        res.json(dvp);
+    develp.save(function(err,data){
+      if(err) return res.json(err);
+        else find(res);
     });
+    
+   
 });
 app.use(express.static(__dirname + '/public'));
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
@@ -59,4 +62,8 @@ app.listen(server_port, server_ip_address, function(){
   console.log("Listening on " + server_ip_address + ", server_port " + server_port)
 });
 
-
+ var find=function(res){developerModel.find(function(err,dvp){
+        if(err) return console.log("error");
+        res.json(dvp);
+    });
+                       }

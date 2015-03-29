@@ -18,13 +18,14 @@
                 <th><button ng-click="add(dev)" class="btn btn-success pull-right">
                     <span class="glyphicon glyphicon-success"></span></th>
                 </tr>
-             <tr><th>First name</th><th>Last name</th></tr>
+             <tr><th>First name</th><th>Last name</th><th>ID</th></tr>
             </thead>
             <tbody>
                 <tr ng-repeat="developer in developers">
                 <td>{{developer.firstname}}</td>
                     <td>{{developer.lastname}}</td>
-                    <td><button ng-click="remove($index)" class="btn btn-danger pull-right">
+                    <td>{{developer._id}}</td>
+                    <td><button ng-click="remove(developer._id)" class="btn btn-danger pull-right">
                     <span class="glyphicon glyphicon-remove"></span>
                     </button></td>
                 </tr> 

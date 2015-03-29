@@ -4,8 +4,9 @@ app.controller("chatcontroller",function($scope,$http){
     .success(function(response){
     $scope.developers=response;
     });
-    $scope.remove=function(index){
-        $http.delete('/rest/developer/'+index)
+    $scope.remove=function(id){
+        alert(id);
+        $http.delete('/rest/developer/'+id)
         .success(function(response){
             $scope.developers=response;
         });
