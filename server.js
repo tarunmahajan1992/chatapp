@@ -3,6 +3,16 @@ var app=express();
 var bodyParser = require('body-parser');
 var multer = require('multer'); 
 
+
+var mongoose=require('mongoose');
+
+mongoose.connect('mongodb://localhost/mydb');
+
+var developerSchema=mongoose.Schema({
+    firstname:String,lastname:String
+},{collection:'developers'});
+var developerModel=mongoose.model('',developerSchema);
+
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(multer()); // for parsing multipart/form-data
@@ -29,8 +39,17 @@ developer.splice(req.params.index,1);
 
 app.post('/rest/developer',function(req,res){
     var newDeveloper=req.body;
+    /*console.log(JSON.stringify(newDeveloper));
     developer.push(newDeveloper);
-    res.json(developer);
+    res.json(developer);*/
+    console.log(JSON.stringify(newDeveloper))
+    var develp=new developerModel(newDeveloper);
+    develp.save();
+    
+    developerModel.find(function(err,dvp){
+        if(err) return console.log("error");
+        res.json(dvp);
+    });
 });
 app.use(express.static(__dirname + '/public'));
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080

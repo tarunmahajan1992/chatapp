@@ -11,7 +11,7 @@ app.controller("chatcontroller",function($scope,$http){
         });
     };
     $scope.add=function(dev){
-        alert('here');
+       // alert('here');
         $http.post('/rest/developer',dev) 
          .success(function(response){
             $scope.developers=response;
