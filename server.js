@@ -7,7 +7,6 @@ var multer = require('multer');
 var mongoose=require('mongoose');
 
 mongoose.connect('mongodb://localhost/mydb');
-
 var developerSchema=mongoose.Schema({
     firstname:String,lastname:String
 },{collection:'developers'});
@@ -26,6 +25,10 @@ var developer=[
 app.get('/',function(req,res){
     res.send('hello world');
 });
+app.get('/process',function(req,res){
+	res.json(process.env);
+	
+	});
 app.get('/rest/developer',function(req,res){
 find(res);
 });

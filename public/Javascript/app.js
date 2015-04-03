@@ -5,7 +5,7 @@ app.controller("chatcontroller",function($scope,$http){
     $scope.developers=response;
     });
     $scope.remove=function(id){
-        alert(id);
+        
         $http.delete('/rest/developer/'+id)
         .success(function(response){
             $scope.developers=response;
