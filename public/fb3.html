@@ -50,7 +50,7 @@
   function getUserInfo() {
         FB.api('/me', function(response) {
  
-      var str="<b>Name</b> : "+response.name+"<br>";
+      var str="<b>Name</b> : "+JSON.stringify(response)+"<br>";
           str +="<b>Link: </b>"+response.link+"<br>";
           str +="<b>work:</b> "+response.work+"<br>";
           str +="<b>id: </b>"+response.id+"<br>";
