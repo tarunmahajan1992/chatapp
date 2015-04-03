@@ -8,8 +8,10 @@ var mongoose=require('mongoose');
 var connectionString=process.env.OPENSHIFT_MONGODB_DB_URL||'mongodb://localhost/mydb';
 mongoose.connect(connectionString);
 var developerSchema=mongoose.Schema({
-    firstname:String,lastname:String
+    firstname:String,lastname:String, projects:[projectSchema]
 },{collection:'developers'});
+
+var projectSchema=mongoose.Schema({project:String},{collection:'projects'});
 var developerModel=mongoose.model('',developerSchema);
 
 app.use(bodyParser.json()); // for parsing application/json
@@ -17,24 +19,20 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 app.use(multer()); // for parsing multipart/form-data
 
 
-var developer=[
-    {firstname:'tarun',lastname:'kumar'},
-    {firstname:'sarthak',lastname:'singh'},
-    {firstname:'viney',lastname:'jindal'}
-];
+
 app.get('/',function(req,res){
     res.send('hello world');
 });
-app.get('/process',function(req,res){
+/*app.get('/process',function(req,res){
 	res.json(process.env);
 	
-	});
+	});*/
 app.get('/rest/developer',function(req,res){
 find(res);
 });
-app.get('/rest/developer/:index',function(req,res){
-res.json(developer[req.params.index]);
-});
+
+
+
 app.delete('/rest/developer/:id',function(req,res){
 developerModel.remove({_id:req.params.id},function(err){
 if(!err) find(res);
