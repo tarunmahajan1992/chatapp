@@ -5,8 +5,8 @@ var multer = require('multer');
 
 
 var mongoose=require('mongoose');
-
-//mongoose.connect('mongodb://localhost/mydb');
+var connectionString=process.env.OPENSHIFT_MONGODB_DB_URL||'mongodb://localhost/mydb';
+mongoose.connect(connectionString);
 var developerSchema=mongoose.Schema({
     firstname:String,lastname:String
 },{collection:'developers'});
