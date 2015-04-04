@@ -16,7 +16,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json()); // for parsing application/json
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({ secret: 'keyboard cat', key: 'sid',resave:false,saveUninitialized:false}));
+app.use(session({ secret: 'ajhkjhvnhdln', key: 'fgfklhfgl44k',resave:false,saveUninitialized:false}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(multer()); // for parsing multipart/form-data
