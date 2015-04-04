@@ -1,6 +1,6 @@
  var mongoose=require('mongoose');
 	var userSchema=mongoose.Schema({
-    firstname:String,id:Number
+    firstname:String,fb_id:String
     },{collection:'users'});
 
-    module.exports=mongoose.model('users',userSchema);
+    module.exports=mongoose.model('user',userSchema);

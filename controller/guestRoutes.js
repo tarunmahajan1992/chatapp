@@ -1,4 +1,6 @@
 var developerModel=require(__base+'/model/developerModel.js');
+var userModel=require(__base+'/model/userModel');
+
 module.exports=function(app,express){
 
 app.get('/',function(req,res){
@@ -33,9 +35,24 @@ app.post('/rest/developer',function(req,res){
       if(err) return res.json(err);
         else find(res);
     });
-    
    
 });
+
+app.post('/rest/user',function(req,res){
+    var newDeveloper=req.body;
+    /*console.log(JSON.stringify(newDeveloper));
+    developer.push(newDeveloper);
+    res.json(developer);*/
+    console.log(JSON.stringify(newDeveloper))
+    var develp=new userModel(newDeveloper);
+    develp.save(function(err,data){
+      if(err) return res.json(err);
+        else find(res);
+    });
+   
+});
+
+
 app.use(express.static(__base + '/public'));
 var find=function(res){developerModel.find(function(err,dvp){
         if(err) return console.log("error");
