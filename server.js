@@ -12,11 +12,12 @@ var FacebookStrategy= require('passport-facebook').Strategy;
 var mongoose=require('mongoose');
 mongoose.connect(config.connectionString);
 
+app.use(express.static(__base+'/public'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.json()); // for parsing application/json
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({ secret: 'ajhkjhvnhdln', key: 'fgfklhfgl44k',resave:false,saveUninitialized:false}));
+app.use(session({ secret: 'ajhkjhvnhdln', key: 'gfftjkdtyljg',resave:false,saveUninitialized:false}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(multer()); // for parsing multipart/form-data
@@ -29,4 +30,5 @@ app.listen(config.server_port, config.server_ip_address, function(){
   console.log("Listening on " + config.server_ip_address + ", server_port " + config.server_port)
 });
 var passportConfig=require(__base+'/lib/passportConfig')(passport,FacebookStrategy,config);				   
-var passportModule=require(__base+'/controller/profileRoutes')(app,passport);
+var passportModule=require(__base+'/controller/profileRoutes')(app,passport,config);
+

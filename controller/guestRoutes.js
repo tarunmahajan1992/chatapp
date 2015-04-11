@@ -16,6 +16,8 @@ find(res);
 
 
 
+
+
 app.delete('/rest/developer/:id',function(req,res){
 developerModel.remove({_id:req.params.id},function(err){
 if(!err) find(res);
@@ -53,7 +55,7 @@ app.post('/rest/user',function(req,res){
 });
 
 
-app.use(express.static(__base + '/public'));
+
 var find=function(res){developerModel.find(function(err,dvp){
         if(err) return console.log("error");
         res.json(dvp);
