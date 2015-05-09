@@ -8,6 +8,16 @@ module.exports=function(app,passport,config){
 app.get('/user/notify',ensureAuthenticated,function(req,res){
 	sendNotification(req,res);
 	});
+	
+app.post('/login',
+  passport.authenticate('local', { successRedirect: '/index.html',
+                                   failureRedirect: '/login',
+                                   failureFlash: true })
+);
+app.get('/login', function(req, res){
+	console.log('in login');
+  res.render('login', { user: req.user, message: 'invalid username/password' });
+});
 
 app.get('/auth/facebook', passport.authenticate('facebook',{authType: 'reauthenticate'}));
 app.get('/auth/facebook/callback',
@@ -24,11 +34,15 @@ app.get('/logout', function(req, res){
 });
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/index.html')
+  res.redirect('/login')
 }
 
+app.get('/account',ensureAuthenticated,function(req,res){
+	res.render('account',{ user: req.user });
+	})
 
-function sendNotification(req,res){
+
+/*function sendNotification(req,res){
 	url='https://graph.facebook.com/'+req.user.id+'/notifications?access_token='+config.facebook_api_key|config.facebook_api_secret;
 	console.log(url);
 	var accesstoken=config.facebook_api_key|config.facebook_api_secret;
@@ -46,5 +60,5 @@ function sendNotification(req,res){
 		}res.send(JSON.stringify(response)+"jhgjhg");
     }
 );
-}
+}*/
 }

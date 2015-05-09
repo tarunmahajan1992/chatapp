@@ -1,3 +1,21 @@
-<p>ID: <%= user.id %></p>
-<p>Username: <%= user.username %></p>
-<p>Name :<%= user.displayName %></p>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Passport-Local Example</title>
+	</head>
+	<body>
+		<% if (!user) { %>
+			<p>
+			<a href="/">Home</a> | 
+			<a href="/login">Log In</a>
+			</p>
+		<% } else { %>
+			<p>
+			<a href="/">Home</a> | 
+			<a href="/account">Account</a> | 
+			<a href="/logout">Log Out</a>
+			</p>
+		<% } %>
+		
+	</body>
+</html>

@@ -9,6 +9,7 @@ var cookieParser= require('cookie-parser');
 var config= require('./lib/configParam');
 var passport  = require('passport');
 var FacebookStrategy= require('passport-facebook').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 var mongoose=require('mongoose');
 mongoose.connect(config.connectionString);
 
@@ -29,6 +30,10 @@ routes(app,express);
 app.listen(config.server_port, config.server_ip_address, function(){
   console.log("Listening on " + config.server_ip_address + ", server_port " + config.server_port)
 });
-var passportConfig=require(__base+'/lib/passportConfig')(passport,FacebookStrategy,config);				   
+var passportConfig=require(__base+'/lib/passportConfig')(passport,FacebookStrategy,LocalStrategy,config);				   
 var passportModule=require(__base+'/controller/profileRoutes')(app,passport,config);
+var mailModule=require(__base+'/lib/mailConfig');
+var sendMailModule=new mailModule();
+//sendMailModule.sendMail('tarunmahajan1992@gmail.com');
+//sendMailModule.sendMail('me.kitaabikida@gmail.com');
 
