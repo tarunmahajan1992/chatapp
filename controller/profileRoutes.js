@@ -38,7 +38,8 @@ function ensureAuthenticated(req, res, next) {
 }
 
 app.get('/account',ensureAuthenticated,function(req,res){
-	res.render('account',{ user: req.user });
+	console.log(" iam here ");
+	res.render('account',{user:req.user});
 	})
 
 
