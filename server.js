@@ -11,6 +11,7 @@ var passport  = require('passport');
 var FacebookStrategy= require('passport-facebook').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
 var mongoose=require('mongoose');
+
 mongoose.connect(config.connectionString);
 
 app.use(express.static(__base+'/public'));
@@ -32,8 +33,6 @@ app.listen(config.server_port, config.server_ip_address, function(){
 });
 var passportConfig=require(__base+'/lib/passportConfig')(passport,FacebookStrategy,LocalStrategy,config);				   
 var passportModule=require(__base+'/controller/profileRoutes')(app,passport,config);
-var mailModule=require(__base+'/lib/mailConfig');
-var sendMailModule=new mailModule();
 //sendMailModule.sendMail('tarunmahajan1992@gmail.com');
 //sendMailModule.sendMail('me.kitaabikida@gmail.com');
 

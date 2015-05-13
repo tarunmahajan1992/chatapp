@@ -4,9 +4,11 @@
 		<title>Passport-Local Example</title>
 	</head>
 	<body>
-		<% if (!user) { %>
+	    <%if (mailsent){%>
+		  <p>Confirmation mail sent. Please check you mail</p>
+		<% }else if (!verified) { %>
 			<p>
-			Please confirm email by clicking on confirmation link sent in email. Resend Confirmation<a href="">Resend</a>
+			Please confirm email by clicking on confirmation link sent in email. Resend Confirmation<a href="/sendConfirmationmail">Resend</a>
 			</p>
 		<% } else { %>
 			<p>

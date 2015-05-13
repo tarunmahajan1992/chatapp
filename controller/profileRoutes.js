@@ -1,9 +1,8 @@
 var request=require('request');
+var routes=require(__base+'/controller');
 
 module.exports=function(app,passport,config){
-	app.get('/account', ensureAuthenticated, function(req, res){
-  res.render('account', { user: req.user });
-});
+	
 
 app.get('/user/notify',ensureAuthenticated,function(req,res){
 	sendNotification(req,res);
@@ -29,19 +28,28 @@ app.get('/auth/facebook/callback',
     res.redirect('/');
   });
 app.get('/logout', function(req, res){
+		console.log(" iam here ");
+
   req.logOut();
   res.redirect('/');
 });
 function ensureAuthenticated(req, res, next) {
+		console.log(" iam here ");
+
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login')
 }
 
-app.get('/account',ensureAuthenticated,function(req,res){
-	console.log(" iam here ");
-	res.render('account',{user:req.user});
+app.get('/myaccount',ensureAuthenticated,function(req,res){
+	//console.log(" iam here LLLLLL");
+	res.render('account',{verified:req.user.verified, mailsent:false});
 	})
+	
+app.get('/sendConfirmationmail',ensureAuthenticated,routes.sendConfimationmail);
 
+app.post('/register',routes.register);
+
+app.get("/verify/:token", routes.verifyToken);
 
 /*function sendNotification(req,res){
 	url='https://graph.facebook.com/'+req.user.id+'/notifications?access_token='+config.facebook_api_key|config.facebook_api_secret;

@@ -14,7 +14,9 @@ app.get('/rest/developer',function(req,res){
 find(res);
 });
 
-
+app.get('/registerForm',function(req,res){
+	res.render('register',{error:null});
+	})
 
 
 
