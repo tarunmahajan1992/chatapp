@@ -1,5 +1,6 @@
 var developerModel=require(__base+'/model/developerModel.js');
 var userModel=require(__base+'/model/userModel');
+var routes=require(__base+'/controller');
 
 module.exports=function(app,express){
 
@@ -17,6 +18,21 @@ find(res);
 app.get('/registerForm',function(req,res){
 	res.render('register',{error:null});
 	})
+	
+app.get('/forgot', function(req, res) {
+  res.render('forgot', {message:"enter email id"}
+  );
+ app.post('/forgot', routes.forgotPassword);
+  
+});
+app.post('/changePassword',routes.changePassword);
+
+app.get("/verifyPasswordChange/:token", function(req,res){
+	 var token = req.params.token;
+
+	res.render('changePassword',{token:token});
+	});
+
 
 
 

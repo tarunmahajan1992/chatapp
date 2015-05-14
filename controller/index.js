@@ -1,6 +1,7 @@
 var mailModule=require(__base+'/lib/mailConfig');
 var uuid = require('node-uuid');
 var dbModel=require(__base+'/model/userModel');
+var mailTemplates=require(__base+'/lib/mailTemplates');
 
 
 module.exports={
@@ -34,11 +35,13 @@ module.exports={
 			var verificationentry=new dbModel.verificationTokenModel();
 			verificationentry._userId=email;
 			verificationentry.createVerificationToken(function(err,token){
-			var message = {
+			/*var message = {
         	 email: email,
    			 verifyURL: req.protocol + "://" + req.get('host') + "/verify/" + token};
-		 	 console.log(message.verifyURL);
-	  	   var confirmationmail=new mailModule(message);
+		 	 console.log(message.verifyURL);*/
+			 var verifyURL=req.protocol + "://" + req.get('host') + "/verify/" + token;
+			 var confirmationMailTemplate=mailTemplates.confirmationMail(email,verifyURL)
+	  	   var confirmationmail=new mailModule(confirmationMailTemplate);
 	  	   console.log("sending mail to" +JSON.stringify(email));
 	  	   confirmationmail.sendMail();	
 	   		 res.render('account',{mailsent:true});
@@ -53,10 +56,44 @@ module.exports={
     var token = req.params.token;
 	console.log("Token is "+token);
     dbModel.verifyUser(token, function(err) {
-        if (err) return res.redirect("verification-failure");
+        if (err) return res.render("message",{message:"verification failed. Url may have expired or some other reason. Try again"});
 		console.log('verification successful');
         res.redirect('/');
     });
-}
+},
+  
+    forgotPassword:function(req,res,next){
+		var email=req.body.email;
+		dbModel.userModel.findOne({username:email},function(err,user){
+			if(user){
+			  var verificationentry=new dbModel.verificationTokenModel();
+			  verificationentry._userId=email;
+			  verificationentry.createVerificationToken(function(err,token){
+			  var verifyURL=req.protocol + "://" + req.get('host') + "/verifyPasswordChange/" + token;
+			  var pwdResetMailTemplate=mailTemplates.passwordResetMail(email,verifyURL)
+	  	      var pwdresetnmail=new mailModule(pwdResetMailTemplate);
+	  	      console.log("sending mail to" +JSON.stringify(email));
+	  	      pwdresetnmail.sendMail();	
+	   		  res.render('message',{message:"Email with a password reset link has been sent to your email ID"});
+		
+		   })
+			}
+			else{
+			 res.render('forgot',{message:"No user with this email Id"});	
+			}
+		});
+		
+	},
+	changePassword:function(req,res,next){
+		var token=req.body.token;
+		var password=req.body.password;
+		dbModel.verifyNchangePwd(token,password, function(err) {
+        if (err) return res.render("message",{message:"Token expired or some other error while password reset. Try again"});
+		console.log('verification successful');
+        res.redirect('/');
+    });
+		
+			
+	}
 	
    }
