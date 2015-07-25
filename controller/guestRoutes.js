@@ -11,11 +11,11 @@ app.get('/',function(req,res){
 	res.json(process.env);
 	
 	});*/
-app.get('/rest/developer',function(req,res){
+/*app.get('/list',function(req,res){
 find(res);
-});
+});*/
 
-app.get('/registerForm',function(req,res){
+app.get('/signup',function(req,res){
 	res.render('register',{error:null});
 	})
 	
@@ -36,7 +36,7 @@ app.get("/verifyPasswordChange/:token", function(req,res){
 
 
 
-app.delete('/rest/developer/:id',function(req,res){
+/*app.post('/delete:id',function(req,res){
 developerModel.remove({_id:req.params.id},function(err){
 if(!err) find(res);
     else res.json(err);
@@ -44,11 +44,11 @@ if(!err) find(res);
     console.log(req.params.id);
 });
 
-app.post('/rest/developer',function(req,res){
+app.post('/add',function(req,res){
     var newDeveloper=req.body;
-    /*console.log(JSON.stringify(newDeveloper));
+    console.log(JSON.stringify(newDeveloper));
     developer.push(newDeveloper);
-    res.json(developer);*/
+    res.json(developer);
     console.log(JSON.stringify(newDeveloper))
     var develp=new developerModel(newDeveloper);
     develp.save(function(err,data){
@@ -60,9 +60,9 @@ app.post('/rest/developer',function(req,res){
 
 app.post('/rest/user',function(req,res){
     var newDeveloper=req.body;
-    /*console.log(JSON.stringify(newDeveloper));
+    console.log(JSON.stringify(newDeveloper));
     developer.push(newDeveloper);
-    res.json(developer);*/
+    res.json(developer);
     console.log(JSON.stringify(newDeveloper))
     var develp=new userModel(newDeveloper);
     develp.save(function(err,data){
@@ -78,6 +78,6 @@ var find=function(res){developerModel.find(function(err,dvp){
         if(err) return console.log("error");
         res.json(dvp);
     });
-                       }
+                       }*/
 
 }

@@ -9,6 +9,8 @@
 	emailid:{type:String,default:null},
 	verified:{type:Boolean,default:false},
 	password:{type:String,default:'kumar'},
+	longitude:{type:String,default:null},
+	latitiude:{type:String,default:null}
 	
     },{collection:'users'});
 	

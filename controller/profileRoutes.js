@@ -1,5 +1,8 @@
 var request=require('request');
 var routes=require(__base+'/controller');
+var developerModel=require(__base+'/model/developerModel.js');
+var userModel=require(__base+'/model/userModel');
+var routes=require(__base+'/controller');
 
 module.exports=function(app,passport,config){
 	
@@ -15,7 +18,7 @@ app.post('/login',
 );
 app.get('/login', function(req, res){
 	console.log('in login');
-  res.render('login', { user: req.user, message: 'invalid username/password' });
+  res.render('login', { user: "unknown", message: 'invalid username/password' });
 });
 
 app.get('/auth/facebook', passport.authenticate('facebook',{authType: 'reauthenticate'}));
@@ -37,7 +40,9 @@ function ensureAuthenticated(req, res, next) {
 		console.log(" iam here ");
 
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
+  console.log("redirect");
+  var error={error:"true"};
+  res.redirect('/login');
 }
 
 app.get('/myaccount',ensureAuthenticated,function(req,res){
@@ -70,4 +75,52 @@ app.get("/verify/:token", routes.verifyToken);
     }
 );
 }*/
+app.get('/list',ensureAuthenticated,function(req,res){
+find(res);
+});
+
+app.post('/delete/:id',ensureAuthenticated,function(req,res){
+	console.log("delete");
+developerModel.remove({_id:req.params.id},function(err){
+if(!err) find(res);
+    else res.json(err);
+})
+    console.log(req.params.id);
+});
+
+app.post('/add',ensureAuthenticated,function(req,res){
+    var newDeveloper=req.body;
+    /*console.log(JSON.stringify(newDeveloper));
+    developer.push(newDeveloper);
+    res.json(developer);*/
+    console.log(JSON.stringify(newDeveloper))
+    var develp=new developerModel(newDeveloper);
+    develp.save(function(err,data){
+      if(err) return res.json(err);
+        else find(res);
+    });
+   
+});
+
+app.post('/rest/user',ensureAuthenticated,function(req,res){
+    var newDeveloper=req.body;
+    /*console.log(JSON.stringify(newDeveloper));
+    developer.push(newDeveloper);
+    res.json(developer);*/
+    console.log(JSON.stringify(newDeveloper))
+    var develp=new userModel(newDeveloper);
+    develp.save(function(err,data){
+      if(err) return res.json(err);
+        else find(res);
+    });
+   
+});
+
+
+
+var find=function(res){developerModel.find(function(err,dvp){
+        if(err) return console.log("error");
+        res.json(dvp);
+    });
+                       }
 }
